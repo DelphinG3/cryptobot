@@ -1,4 +1,5 @@
 import random
+import discord
 import asyncio
 import requests
 from discord import Game
