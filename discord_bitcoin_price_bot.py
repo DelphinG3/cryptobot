@@ -5,7 +5,6 @@ from discord import Game
 from discord.ext.commands import Bot
 import aiohttp
 BOT_PREFIX = ("?", "!")
-TOKEN = "NDg2NTM4MjcyNzI2NTgxMjQ4.DnAjqQ.4x8O-nMDT5uUB3gqlgF_6-1kqyc"
 
 client = Bot(command_prefix=BOT_PREFIX)
 
