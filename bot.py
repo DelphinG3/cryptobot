@@ -8,6 +8,9 @@ BOT_PREFIX = ("?", "!")
 
 client = Bot(command_prefix=BOT_PREFIX)
 
+@client.event
+async def on_ready():
+    print("Bot is ready and connected to Discord")
 
 
 @client.command(pass_context=True)
