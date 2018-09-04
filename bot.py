@@ -8,9 +8,12 @@ BOT_PREFIX = ("?", "!")
 
 client = Bot(command_prefix=BOT_PREFIX)
 
+Client = discord.Client()
+
 @client.event
 async def on_ready():
     print("Bot is ready and connected to Discord")
+
 
 
 @client.command(pass_context=True)
@@ -120,7 +123,7 @@ async def salus():
     value = response.json()[0]["price_usd"]
     await client.say("Salus coin price is: $" + value)
 
-##########################
+
 
 
 
