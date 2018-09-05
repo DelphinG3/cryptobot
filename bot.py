@@ -17,12 +17,10 @@ async def on_ready():
 
 
 
-@client.command(pass_context=True)
-async def bitcoin(ctx):
-    url = 'https://api.coindesk.com/v1/bpi/currentprice/BTC.json'
-    response = requests.get(url)
-    value = response.json()['bpi']['USD']['rate']
-    await client.send_message(ctx.message.channel, "Bitcoin price is: $" + value)
+@client.event
+async def on_ready():
+    await client.change_presence(game=Game(name="очке Антона"))
+    print("Logged in as " + client.user.name)
 
 
 
