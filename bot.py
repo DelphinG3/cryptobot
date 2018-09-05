@@ -1,71 +1,129 @@
-import discord
-from discord.ext.commands import Bot
-from discord.ext import commands
-import asyncio
 import random
+import asyncio
 import aiohttp
-import time
 import json
 from discord import Game
-BOT_PREFIX = ("!")
+from discord.ext.commands import Bot
 
-Client = discord.Client()
-client = commands.Bot(command_prefix = "!")
+BOT_PREFIX = ("?", "!")
 
+client = Bot(command_prefix=BOT_PREFIX)
 
+@client.command()
+async def bitcoin():
+    url = 'https://api.coindesk.com/v1/bpi/currentprice/BTC.json'
+    async with aiohttp.ClientSession() as session:  # Async HTTP request
+        raw_response = await session.get(url)
+        response = await raw_response.text()
+        response = json.loads(response)
+        await client.say("Bitcoin price is: $" + response['bpi']['USD']['rate'])
 
-
-@client.event
-async def on_ready():
-    print("Bot is ready and connected to Discord")
+@client.command()
+async def eth():
+    url = 'https://api.coinmarketcap.com/v1/ticker/ethereum/'
+    response = requests.get(url)
+    value = response.json()[0]["price_usd"]
+    rank = response.json()[0]["rank"]
+    supply = response.json()[0]["total_supply"]
+    change1 = response.json()[0]["percent_change_1h"]
+    change24 = response.json()[0]["percent_change_24h"]
+    change72 = response.json()[0]["percent_change_7d"]
+    vol24 = response.json()[0]["24h_volume_usd"]
+    sym = response.json()[0]["symbol"]
+    await client.say("Ethereum price is: $" + value)
+    await client.say("Ethereums rank is: " + rank)
+    await client.say("Ethereums total supply is: " + supply)
+    await client.say("Ethereums percent change in the past hour is: " +change1)
+    await client.say("Ethereums percent change in the past 24 hours is:" + change24)
+    await client.say("Ethereums percent change in the past 7 days is: " + change72)
+    await client.say("Ethereums 24 hour volume is: " + vol24)
+    await client.say("Ethereums symbol is: " + sym)
+@client.command()
+async def ripple():
+    url = 'https://api.coinmarketcap.com/v1/ticker/ripple/'
+    response = requests.get(url)
+    value = response.json()[0]["price_usd"]
+    rank = response.json()[0]["rank"]
+    supply = response.json()[0]["total_supply"]
+    change1 = response.json()[0]["percent_change_1h"]
+    change24 = response.json()[0]["percent_change_24h"]
+    change72 = response.json()[0]["percent_change_7d"]
+    vol24 = response.json()[0]["24h_volume_usd"]
+    sym = response.json()[0]["symbol"]
+    await client.say("Ripples price is: $" + value)
+    await client.say("Ripples rank is: " + rank)
+    await client.say("Ripples total supply is: " + supply)
+    await client.say("Ripples percent change in the past hour is: " +change1)
+    await client.say("Ripples percent change in the past 24 hours is:" + change24)
+    await client.say("Ripples percent change in the past 7 days is:" + change72)
+    await client.say("Ripples 24 hour volume is:" + vol24)
+    await client.say("Ripples symbol is: " + sym)
+@client.command()
+async def litecoin():
+    url = 'https://api.coinmarketcap.com/v1/ticker/litecoin/'
+    response = requests.get(url)
+    value = response.json()[0]["price_usd"]
+    await client.say("Litecoin price is: $" + value)
+@client.command()
+async def neo():
+    url = 'https://api.coinmarketcap.com/v1/ticker/neo/'
+    response = requests.get(url)
+    value = response.json()[0]["price_usd"]
+    await client.say("NEO price is: $" + value)
+@client.command()
+async def eos():
+    url = 'https://api.coinmarketcap.com/v1/ticker/eos/'
+    response = requests.get(url)
+    value = response.json()[0]["price_usd"]
+    await client.say("EOS price is: $" + value)
+@client.command()
+async def dash():
+    url = 'https://api.coinmarketcap.com/v1/ticker/dash/'
+    response = requests.get(url)
+    value = response.json()[0]["price_usd"]
+    await client.say("DASH price is: $" + value)
+@client.command()
+async def zcash():
+    url = 'https://api.coinmarketcap.com/v1/ticker/zcash/'
+    response = requests.get(url)
+    value = response.json()[0]["price_usd"]
+    await client.say("Zcash price is: $" + value)
+@client.command()
+async def metal():
+    url = 'https://api.coinmarketcap.com/v1/ticker/metal/'
+    response = requests.get(url)
+    value = response.json()[0]["price_usd"]
+    await client.say("METAL coin price is: $" + value)
+@client.command()
+async def trump():
+    url = 'https://api.coinmarketcap.com/v1/ticker/trumpcoin/'
+    response = requests.get(url)
+    value = response.json()[0]["price_usd"]
+    await client.say("Trump Coin price is: $" + value)
+@client.command()
+async def gas():
+    url = 'https://api.coinmarketcap.com/v1/ticker/gas/'
+    response = requests.get(url)
+    value = response.json()[0]["price_usd"]
+    await client.say("GAS coin price is: $" + value)
+@client.command()
+async def gts():
+    url = 'https://api.coinmarketcap.com/v1/ticker/game/'
+    response = requests.get(url)
+    value = response.json()[0]["price_usd"]
+    await client.say("GTS coin price is: $" + value)
+@client.command()
+async def salus():
+    url = 'https://api.coinmarketcap.com/v1/ticker/salus/'
+    response = requests.get(url)
+    value = response.json()[0]["price_usd"]
+    await client.say("Salus coin price is: $" + value)        
     
-@client.event
-async def on_ready():
-    await client.change_presence(game=Game(name="очке Антона"))
-    print("Logged in as " + client.user.name)    
-
-@client.event
-async def on_message(message):
-    if message.content.upper().startswith('PING'):
-        userID = message.author.id
-        await client.send_message(message.channel, "<@%s>  Pong!" % (userID) )
-    if message.content.upper().startswith('SAY'):
-        args = message.content.split(" ")
-        #args[0] = SAY
-        #args[1] = Hey
-        #args[2] = There
-        #args[1] = Hey There
-        await client.send_message(message.channel, "%s" % (" ".join(args[1:])))
-        await client.delete_message(message)
-
-    if  message.content.upper().startswith('БОТ СКАЖИ ЧТО НИБУДЬ'):
-        await client.send_message(message.channel, "Виталя ЛОХ")
-    if  message.content.upper().startswith('БОТ СКАЖИ ЧТО-НИБУДЬ'):
-        await client.send_message(message.channel, "Виталя ЛОХ" )    
-    if message.content.upper().startswith('ПРИВЕТ'):
-        await client.send_message(message.channel, "Здоровеньки булы")
-    if message.content.upper().startswith('QQ'):
-        await client.send_message(message.channel, "q")
-    if message.content.upper().startswith('КУ'):
-        await client.send_message(message.channel, "Дарова")
-    if message.content.upper().startswith('ЗДАРОВА МЫШИ'):
-        await client.send_message(message.channel, "Здарова чёрт")
-    if message.content.startswith('!hello'):
-        msg = 'Hello {0.author.mention}'.format(message)
-        await client.send_message(message.channel, msg)
+    
+        
+            
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-client.run("NDg2NTM4MjcyNzI2NTgxMjQ4.DnAjqQ.4x8O-nMDT5uUB3gqlgF_6-1kqyc")
+client.run("NDg2NTM4MjcyNzI2NTgxMjQ4.DnFcjA.cAywcXhjY35Ps1Xn3vQyoJ8skPo")
